@@ -84,8 +84,8 @@ I am a Computer Science & Engineering undergraduate at Jadavpur University, curr
 
 ## ⏳ Weekly Coding Metrics 
 
-<!-- START_SECTION:wakatime -->
-<!-- END_SECTION:wakatime -->
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
 
 ---
 
