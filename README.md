@@ -82,7 +82,7 @@ I am a Computer Science & Engineering undergraduate at Jadavpur University, curr
   <img src="https://github-readme-stats.shion.dev/api/top-langs/?username=ritamghosh1&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117" />
 </p>
 
-## ⏳ Weekly Coding Metrics (WakaTime)
+## ⏳ Weekly Coding Metrics 
 
 <!-- START_SECTION:wakatime -->
 <!-- END_SECTION:wakatime -->
