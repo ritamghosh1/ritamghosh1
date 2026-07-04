@@ -9,12 +9,13 @@ jobs:
   update-readme:
     name: Update Profile README
     runs-on: ubuntu-latest
-    steps:
 
+    permissions: 
+      contents: write 
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
       
-
       - name: Update WakaTime Stats
         uses: athul/waka-readme@master
         with:
