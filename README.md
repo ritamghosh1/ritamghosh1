@@ -1,7 +1,6 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=30&pause=1000&color=00FF41&center=true&vCenter=true&width=600&lines=>+_Hi,+I'm+Ritam+Ghosh+_;>+_Computer+Science+Undergrad;>+_Competitive+Programmer;>+_Full Stack+Developer;&cursor=█" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=32&pause=1000&color=38BDF8&center=true&vCenter=true&width=600&lines=%3C+Hi,+I%27m+Ritam+Ghosh+/%3E;sys.role+=+%22CS+Undergrad%22;while+(coding)+%7B+build(FullStack)+%7D;Competitive+Programmer+%F0%9F%8F%86&cursor=%E2%96%88" alt="Typing SVG" />
 </h1>
-
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=ritamghosh1&color=00FF41&style=for-the-badge&label=VIEWS" alt="Profile Views" />
 </p>
