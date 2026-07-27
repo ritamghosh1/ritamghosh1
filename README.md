@@ -87,9 +87,10 @@ I am a Computer Science & Engineering undergraduate at Jadavpur University, curr
 <!--START_SECTION:waka-->
 
 ```txt
-From: 18 July 2026 - To: 25 July 2026
+From: 19 July 2026 - To: 26 July 2026
 
-Other   1 min                 █████████████████████████   100.00 %
+C++     49 mins               ████████████████████████▒   96.67 %
+Other   1 min                 ▓░░░░░░░░░░░░░░░░░░░░░░░░   03.33 %
 ```
 
 <!--END_SECTION:waka-->
