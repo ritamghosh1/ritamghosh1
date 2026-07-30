@@ -87,7 +87,7 @@ I am a Computer Science & Engineering undergraduate at Jadavpur University, curr
 <!--START_SECTION:waka-->
 
 ```txt
-From: 21 July 2026 - To: 28 July 2026
+From: 22 July 2026 - To: 29 July 2026
 
 Bash   1 hr 58 mins          █████████████████▓░░░░░░░   70.55 %
 C++    49 mins               ███████▒░░░░░░░░░░░░░░░░░   29.45 %
