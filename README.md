@@ -87,13 +87,13 @@ I am a Computer Science & Engineering undergraduate at Jadavpur University, curr
 <!--START_SECTION:waka-->
 
 ```txt
-From: 25 September 2026 - To: 02 October 2026
+From: 26 September 2026 - To: 03 October 2026
 
-JavaScript   13 hrs 43 mins        █████████▓░░░░░░░░░░░░░░░   39.06 %
-C++          5 hrs 42 mins         ████░░░░░░░░░░░░░░░░░░░░░   16.22 %
-HTML         4 hrs 21 mins         ███░░░░░░░░░░░░░░░░░░░░░░   12.38 %
-Markdown     3 hrs 57 mins         ██▓░░░░░░░░░░░░░░░░░░░░░░   11.27 %
-TeX          2 hrs 53 mins         ██░░░░░░░░░░░░░░░░░░░░░░░   08.22 %
+JavaScript   13 hrs 43 mins        ██████████▒░░░░░░░░░░░░░░   40.94 %
+C++          5 hrs 32 mins         ████░░░░░░░░░░░░░░░░░░░░░   16.50 %
+HTML         4 hrs 21 mins         ███▒░░░░░░░░░░░░░░░░░░░░░   12.98 %
+Markdown     3 hrs                 ██▒░░░░░░░░░░░░░░░░░░░░░░   08.98 %
+TeX          2 hrs 53 mins         ██░░░░░░░░░░░░░░░░░░░░░░░   08.62 %
 ```
 
 <!--END_SECTION:waka-->
