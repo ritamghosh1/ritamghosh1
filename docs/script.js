@@ -1,140 +1,149 @@
-"use strict";
-const filterButtons = [...document.querySelectorAll("[data-filter]")];
-document.querySelector(".filters").hidden = false;
-for (const button of filterButtons)
-  button.addEventListener("click", () => {
-    for (const item of filterButtons)
-      item.setAttribute("aria-pressed", String(item === button));
-    let visible = 0;
-    for (const project of document.querySelectorAll("[data-category]")) {
-      project.hidden =
-        button.dataset.filter !== "all" &&
-        !project.dataset.category.split(" ").includes(button.dataset.filter);
-      if (!project.hidden) visible++;
-    }
-    document.querySelector("#filter-status").textContent =
-      `${visible} projects shown.`;
-  });
-document.querySelector("#year").textContent = new Date().getFullYear();
-const copy = document.querySelector("#copy-email");
-copy.hidden = false;
-copy.addEventListener("click", async () => {
-  const status = document.querySelector("#copy-status");
-  try {
-    await navigator.clipboard.writeText("ritamghosh548@gmail.com");
-    status.textContent = "Email address copied.";
-  } catch {
-    status.textContent =
-      "Select and copy the email address above, or click it to open your mail app.";
+'use strict';
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const year = document.querySelector('#year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  const theme = document.querySelector('#theme');
+  if (theme && window.portfolioTheme) {
+    theme.value = window.portfolioTheme.preference;
+    theme.closest('.theme-control').hidden = false;
+    theme.addEventListener('change', () => window.portfolioTheme.set(theme.value));
   }
-});
-const width = 12,
-  height = 10,
-  start = 13,
-  goal = 106;
-const grid = document.querySelector("#maze"),
-  run = document.querySelector("#run"),
-  reset = document.querySelector("#reset");
-const status = document.querySelector("#demo-status");
-let walls = new Set(),
-  cells = [],
-  busy = false;
-function neighbors(index) {
-  const x = index % width,
-    y = Math.floor(index / width);
-  return [
-    [x + 1, y],
-    [x, y + 1],
-    [x - 1, y],
-    [x, y - 1],
-  ]
-    .filter(([a, b]) => a >= 0 && a < width && b >= 0 && b < height)
-    .map(([a, b]) => b * width + a);
-}
-function generate() {
-  walls = new Set();
-  // Keep a guaranteed route so every generated maze can be solved.
-  const protectedCells = new Set([start, goal]);
-  let cursor = start;
-  while (cursor % width < goal % width) protectedCells.add(++cursor);
-  while (cursor < goal) {
-    cursor += width;
-    protectedCells.add(cursor);
+
+  const copy = document.querySelector('#copy-email');
+  if (copy) {
+    copy.hidden = false;
+    copy.addEventListener('click', async () => {
+      const status = document.querySelector('#copy-status');
+      try {
+        await navigator.clipboard.writeText('ritamghosh548@gmail.com');
+        status.textContent = 'Email address copied.';
+      } catch {
+        status.textContent = 'Copy the email address above, or select it to open your mail app.';
+      }
+    });
   }
-  for (let i = 0; i < width * height; i++)
-    if (!protectedCells.has(i) && Math.random() < 0.29) walls.add(i);
-  grid.replaceChildren();
-  cells = [];
-  for (let i = 0; i < width * height; i++) {
-    const cell = document.createElement("span");
-    cell.className = "cell";
-    cell.setAttribute("aria-hidden", "true");
-    if (walls.has(i)) cell.classList.add("wall");
-    if (i === start) {
-      cell.classList.add("start");
-      cell.textContent = "S";
-    }
-    if (i === goal) {
-      cell.classList.add("end");
-      cell.textContent = "G";
-    }
-    cells.push(cell);
-    grid.append(cell);
-  }
-  grid.setAttribute(
-    "aria-label",
-    "A 12 by 10 maze. S marks the start, G marks the goal. Use Find the shortest path to solve it.",
-  );
-  status.textContent = "Ready. Find the shortest route from S to G.";
-}
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-run.addEventListener("click", async () => {
-  if (busy) return;
-  busy = true;
-  run.disabled = reset.disabled = true;
-  try {
-    for (const cell of cells) cell.classList.remove("visited", "path");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const queue = [start],
-      visited = new Set([start]),
-      parents = new Map();
-    status.textContent = "Exploring the maze, one layer at a time…";
-    for (let head = 0; head < queue.length; head++) {
-      const current = queue[head];
-      if (current === goal) break;
-      for (const next of neighbors(current))
-        if (!visited.has(next) && !walls.has(next)) {
-          visited.add(next);
-          parents.set(next, current);
-          queue.push(next);
-          cells[next].classList.add("visited");
+
+  const track = document.querySelector('#project-track');
+  if (track) {
+    const projects = [...track.querySelectorAll('[data-category]')];
+    const filters = [...document.querySelectorAll('[data-filter]')];
+    const previous = document.querySelector('#project-prev');
+    const next = document.querySelector('#project-next');
+    const position = document.querySelector('#project-position');
+    const empty = document.querySelector('#empty-projects');
+    let visible = projects.slice();
+    let current = 0;
+    let settle;
+
+    const update = () => {
+      previous.disabled = current === 0 || !visible.length;
+      next.disabled = current >= visible.length - 1;
+      const text = visible.length
+        ? `${String(current + 1).padStart(2, '0')} / ${String(visible.length).padStart(2, '0')} — ${visible[current].dataset.name}`
+        : 'No projects';
+      if (position.textContent !== text) position.textContent = text;
+    };
+    const go = (index, behavior = reduced.matches ? 'instant' : 'smooth') => {
+      if (!visible.length) return;
+      current = Math.max(0, Math.min(index, visible.length - 1));
+      const left = visible[current].offsetLeft;
+      track.scrollTo({ left, behavior });
+      update();
+    };
+    track.classList.add('is-carousel');
+    track.tabIndex = 0;
+    track.setAttribute('role', 'region');
+    track.setAttribute('aria-roledescription', 'carousel');
+    track.setAttribute('aria-label', 'Selected projects. Use left and right arrow keys to browse.');
+    document.querySelector('.rail-controls').hidden = false;
+    document.querySelector('.rail-hint').hidden = false;
+    document.querySelector('.filters').hidden = false;
+    previous.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    track.addEventListener('keydown', (event) => {
+      if (event.target !== track || event.altKey || event.ctrlKey || event.metaKey) return;
+      const positions = { ArrowLeft: current - 1, ArrowRight: current + 1, Home: 0, End: visible.length - 1 };
+      if (event.key in positions) {
+        event.preventDefault();
+        go(positions[event.key]);
+      }
+    });
+    track.addEventListener('focusin', (event) => {
+      const project = event.target.closest('.project');
+      const index = visible.indexOf(project);
+      if (index !== -1 && index !== current) go(index, 'instant');
+    });
+    // Scroll only updates position feedback; it never drives a visual animation.
+    track.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        if (!visible.length) return;
+        const offsets = visible.map((item) => Math.abs(item.offsetLeft - track.scrollLeft));
+        current = offsets.indexOf(Math.min(...offsets));
+        update();
+      }, 100);
+    }, { passive: true });
+    for (const button of filters) {
+      button.addEventListener('click', () => {
+        clearTimeout(settle);
+        for (const item of filters) item.setAttribute('aria-pressed', String(item === button));
+        for (const project of projects) {
+          project.hidden = button.dataset.filter !== 'all' && !project.dataset.category.split(' ').includes(button.dataset.filter);
         }
-      if (!reduced) await sleep(16);
+        visible = projects.filter((project) => !project.hidden);
+        current = 0;
+        empty.hidden = visible.length > 0;
+        track.hidden = visible.length === 0;
+        document.querySelector('#filter-status').textContent = `${visible.length} ${visible.length === 1 ? 'project' : 'projects'} shown.`;
+        track.scrollTo({ left: 0, behavior: 'instant' });
+        update();
+      });
     }
-    if (!visited.has(goal)) {
-      status.textContent = "No path found. Try a new maze.";
-      return;
+    if ('ResizeObserver' in window) {
+      const sizeObserver = new ResizeObserver(() => go(current, 'instant'));
+      sizeObserver.observe(track);
     }
-    let current = goal,
-      path = [goal];
-    while (current !== start) {
-      current = parents.get(current);
-      path.push(current);
-    }
-    for (const index of path.reverse()) {
-      cells[index].classList.add("path");
-      if (!reduced) await sleep(25);
-    }
-    status.textContent = `Found it: ${path.length - 1} moves. ${visited.size} cells discovered.`;
-    grid.setAttribute(
-      "aria-label",
-      `Solved maze. The shortest path from S to G is ${path.length - 1} moves, shown in blue.`,
-    );
-  } finally {
-    busy = false;
-    run.disabled = reset.disabled = false;
+    reduced.addEventListener('change', () => go(current, 'instant'));
+    update();
   }
-});
-reset.addEventListener("click", generate);
-document.querySelector(".demo-controls").hidden = false;
-generate();
+
+  // Visible HTML is the baseline. Entrances start only when the observer fires.
+  const revealDuration = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--motion-reveal')) || 550;
+  const animations = new Set();
+  let observer;
+  const animate = (element, delay = 0) => {
+    if (reduced.matches || !element.animate) return;
+    const animation = element.animate(
+      [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      { duration: revealDuration, delay, easing: 'ease-out', fill: 'backwards' },
+    );
+    animations.add(animation);
+    const remove = () => animations.delete(animation);
+    animation.finished.then(remove, remove);
+  };
+  const hero = document.querySelector('.hero-intro');
+  if (hero) animate(hero);
+  const reveal = [...document.querySelectorAll('[data-reveal]')];
+  if (!reduced.matches && 'IntersectionObserver' in window) {
+    let remaining = reveal.length;
+    observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        animate(entry.target);
+        if (--remaining === 0) observer.disconnect();
+      }
+    }, { threshold: 0.12 });
+    reveal.forEach((element) => observer.observe(element));
+  }
+  reduced.addEventListener('change', () => {
+    if (reduced.matches) {
+      observer?.disconnect();
+      animations.forEach((animation) => animation.cancel());
+      animations.clear();
+    }
+  });
+  window.addEventListener('pagehide', () => animations.forEach((animation) => animation.cancel()));
+})();

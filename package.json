@@ -1,0 +1,13 @@
+{
+  "name": "ritam-ghosh-portfolio",
+  "private": true,
+  "scripts": {
+    "build": "python3 scripts/build_site.py",
+    "check": "node --check docs/script.js && node --check docs/theme.js && python3 scripts/check_site.py",
+    "test": "node --test tests/site.test.cjs"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "jsdom": "^26.1.0"
+  }
+}
