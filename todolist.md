@@ -8,7 +8,7 @@ Updated: November 7, 2026.
 
 Implemented: responsive editorial layout, native swipe/keyboard project rail, filters and empty state, three direct-link case studies, architecture flows, portrait and resume, light/dark/system theme, one-time entrances, reduced-motion changes, copy-email fallback, social card, favicon/touch icon, sitemap, content generator, static/HTTP checks, behavior tests, and CI.
 
-Publication: after the initial private-repository plan rejection, Ritam explicitly authorized making the repository public and publishing with GitHub Pages. Visibility is now public; deployment/origin verification follows below. Browser host and native capture failed, so real-browser, device, screen-reader, and Lighthouse checks are not represented as passed. Real project screenshots, additional photos, the new project, and the Playground replacement await assets or a brief.
+Publication: after the initial private-repository plan rejection, Ritam explicitly authorized making the repository public and publishing with GitHub Pages. The repository is public and GitHub Pages has deployed `main` / `/docs` successfully with HTTPS enforced. All 16 checked public paths matched the release bytes, including case studies, share images, scripts/styles, and resume. Live URL: https://ritamghosh1.github.io/ritamghosh1/. Browser host and native capture failed, so real-browser, device, screen-reader, and Lighthouse checks are not represented as passed. Real project screenshots, additional photos, the new project, and the Playground replacement await assets or a brief.
 
 Optional choices closed for this release: no inline PDF preview, autoplay, analytics, contact-form service, empty writing section, photo lightbox, custom domain, or framework migration. Their prerequisites or a concrete need are absent. These are deliberate scope decisions, not implemented features.
 
@@ -30,7 +30,7 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 
 - [x] Receive the resume and permission to create a website copy excluding Sentiment Streamer. Use the supplied email and professional details; retain contact details in the downloadable resume.
 - [x] Receive `Profpic.png` and export optimized portrait assets for the website.
-- [ ] Choose 3–6 additional photos if a gallery is wanted: project building, campus, events, or personal interests. Confirm permission to publish photos containing other people.
+- Deferred — needs Ritam’s assets: choose 3–6 additional photos if a gallery is wanted: project building, campus, events, or personal interests. Confirm permission to publish photos containing other people.
 - [ ] Collect real screenshots for Ask the Book, AlgoCoach, and Arrakis. Remove private data, credentials, and irrelevant browser chrome.
 - [x] Match project names, stacks, roles, links, and status to the supplied resume and project READMEs. Omit unsupplied project dates; label Arrakis as a team concept.
 - [ ] Recheck full demo behavior in a working browser; hosted APIs may sleep or require sign-in.
@@ -60,12 +60,12 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 - [x] Store the approved PDF at a stable path such as `docs/assets/resume/ritam-ghosh-resume.pdf`.
 - [x] Add clearly labeled “View resume” and “Download resume” links. Place a prominent entry in the hero or navigation and a secondary entry near About or Contact.
 - [x] Open the view link as a normal PDF URL. If opening a new tab, indicate it accessibly and use appropriate link attributes.
-- [ ] Use a download link with a meaningful filename; verify behavior on the deployed origin, since browser behavior can differ.
+- [x] Add the `Ritam_Ghosh_Resume.pdf` download filename and verify the live PDF URL returns the exact approved bytes with `application/pdf`. Browser-specific download behavior remains below.
 - [x] Include a short HTML summary of education and relevant skills so key information is available without opening a PDF.
 - [x] Omit a resume update-date claim because the original issue date was not supplied.
 - [x] Verify the website PDF has selectable text, working embedded link targets, one page, and no excluded project text or links; visually inspect its rendered page.
 - [ ] Verify PDF viewing and download behavior in desktop and mobile browsers.
-- [ ] If adding an inline preview later, keep a direct link as a fallback and load the preview only on request.
+- Deferred: inline PDF preview is not needed for this release; direct viewing/download links are implemented.
 
 **Done when:** both resume actions work on desktop and mobile, the published PDF is current, and no resume link points to a placeholder.
 
@@ -79,7 +79,7 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 - [ ] Replace illustrative project previews with real screenshots where available. Keep any remaining illustration clearly identified as an illustration.
 - [ ] Use consistent screenshot framing without cropping out information needed to understand the project.
 - [x] Remove unnecessary location metadata from public photo exports and keep original large files out of the shipped site.
-- [ ] Verify every image path on a case-sensitive host.
+- [x] Verify every published image path on GitHub Pages and compare its bytes to the release.
 
 **Done when:** images look sharp at their intended display sizes, crops work across breakpoints, and loading media does not shift the layout.
 
@@ -113,11 +113,14 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 
 - [x] Use the selected-project cards as the swipe surface. Screenshot and personal-photo galleries remain deferred until real assets exist.
 - [x] Prototype a horizontal track with native scrolling and CSS scroll snap before adding custom gesture code.
-- [ ] Support touch swipe, trackpad scrolling, visible previous/next controls, and keyboard navigation. Every item must be reachable without dragging.
+- [x] Implement native touch/trackpad scrolling, previous/next controls, and Arrow/Home/End navigation; test finite boundaries and links reachable without dragging.
+- [ ] Verify actual touch/trackpad gesture behavior on real devices.
 - [x] Define boundary behavior at the first and last item; avoid an infinite loop unless it has a clear benefit.
 - [x] Show the current position or slide count and disable unavailable navigation actions.
-- [ ] Preserve vertical page scrolling when a gesture is mostly vertical. Verify swiping does not accidentally open project links.
-- [ ] Ensure focused links and controls scroll into view; do not hide focused content off-screen.
+- [x] Preserve native gesture handling and vertical document scrolling; do not intercept wheel or pointer gestures.
+- [ ] Confirm mostly vertical swipes and accidental-link prevention on an actual touch device.
+- [x] Implement and test horizontal focus navigation so focusing a project link selects its card without programmatic vertical scrolling.
+- [ ] Verify rendered focus visibility and browser scrolling by keyboard on devices.
 - [x] Avoid autoplay. If later introduced for a specific reason, provide pause controls and stop it on interaction.
 
 ### Accessibility and performance
@@ -137,7 +140,7 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 - [x] Distinguish implemented work from planned features and personal contributions from team contributions.
 - [x] Add readable architecture diagrams only where they explain a meaningful design decision.
 - [x] Show real outcomes, limitations, and tradeoffs; avoid unsupported performance figures.
-- [ ] Provide working source and demo links, or accurately label unavailable demos.
+- [x] Add documented source/demo URLs and label Streamlit sign-in/wake-up, AlgoCoach cold starts, and Arrakis concept status. Full external-app behavior remains a manual check.
 - [x] If detail pages are added, support direct links, browser back, consistent navigation, and unique page metadata.
 
 **Done when:** the strongest projects explain engineering judgment as well as technologies used.
@@ -170,7 +173,7 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 ## 10. Metadata, sharing, and performance — P1
 
 - [x] Generate unique titles, descriptions, matching canonical/OG URLs, image alt text, and Twitter cards for the intended GitHub Pages URL.
-- [ ] Verify absolute share assets at the real deployed URL after hosting is enabled.
+- [x] Fetch the absolute Open Graph/social image URL over HTTPS and match it to the release. Actual social-network card rendering remains a manual check.
 - [x] Create a branded social preview image using approved assets, and add absolute Open Graph / social image URLs with descriptive alt text.
 - [x] Add SVG favicon/touch icon and update browser theme-color with the selected theme.
 - [ ] Visually verify icon and browser chrome rendering on devices.
@@ -188,20 +191,22 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 - [x] Serve the static site locally and verify successful HTTP responses.
 - [ ] Complete visual browser preview; browser host/native capture errors prevented it in this session.
 - [x] Check JavaScript syntax, HTML structure, duplicate IDs, missing local assets, and broken section anchors.
-- [ ] Verify project filters, email-copy success and failure, resume viewing/downloading, and every navigation link.
+- [x] Test filtering, copy success/failure, no-JavaScript links, and carousel keyboard/focus flows; validate local navigation anchors and published resume responses.
+- [ ] Finish interactive browser checks for navigation, PDF viewing, and downloads.
 - [ ] Test phone, tablet, and desktop layouts, including 320 px width, landscape, zoom, and long text.
 - [ ] Test current Chrome, Firefox, Safari, and at least one actual touch device when available.
-- [ ] Check empty/slow media loading, reduced motion, JavaScript disabled, and repeated interactions.
+- [x] Test empty filters, reduced-motion initialization/live changes, no-JavaScript content, repeated navigation/filtering, storage denial, and clipboard denial.
+- [ ] Check slow/unavailable media loading in rendered browsers.
 - [ ] Inspect browser console and network requests for runtime errors and 404s.
-- [x] Document the intended `main` + `/docs` setup and exact private-repository plan rejection in `DEPLOYMENT.md`.
+- [x] Document the `main` + `/docs` setup, initial plan rejection, explicit public-visibility authorization, and successful public publication in `DEPLOYMENT.md`.
 - [x] Receive explicit authorization, make the repository public, and select GitHub Pages from `main` / `/docs`.
-- [ ] Confirm GitHub accepts and deploys that source.
+- [x] Confirm GitHub accepts and deploys `main` / `/docs`: Pages build/deploy succeeded; site status is `built`; HTTPS is enforced.
 - [x] Verify 13 local HTTP paths under `/ritamghosh1/`, including nested case studies, assets, and exact resume bytes/PDF content type.
-- [ ] Repeat URL/download checks at the actual published origin.
-- [ ] Recheck canonical and share URLs if a custom domain is configured; verify HTTPS and redirects.
+- [x] Verify 16 published HTTPS paths with exact release-content matches, including the resume PDF content type and bytes.
+- [x] Keep the GitHub Pages canonical origin (no custom domain), fetch canonical/share paths over HTTPS, and confirm HTTPS enforcement. Recheck redirects if a custom domain is introduced later.
 - [x] Recheck that existing profile workflows still operate and no large original assets or private data were added.
 - [x] Record implementation completion and verification limits on November 7, 2026.
-- [ ] Record a public launch date only after a successful deployment.
+- [x] Public launch: November 7, 2026 — https://ritamghosh1.github.io/ritamghosh1/.
 
 **Launch gate:** approved real content, functioning resume, responsive layout, accessible navigation, working project/contact links, no Playground remnants, and no blocking console or asset errors.
 
@@ -209,11 +214,11 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 
 - [x] Theme switching, with complete contrast checks and a persistent preference, if both themes can be maintained well.
 - [x] Add an internship summary and selected resume achievements.
-- [ ] Consider a longer timeline only if more material makes it useful.
-- [ ] A small writing section once there are real articles to link to.
-- [ ] A photo lightbox only if the gallery benefits from it; support Escape, focus containment, focus return, and descriptive captions.
-- [ ] A contact form only if email is insufficient; choose a real submission service, provide labels and error states, and never put private service credentials in frontend code.
-- [ ] A custom domain once the launch version is stable.
+- Deferred: a longer timeline needs more verified experience material.
+- Deferred: a writing section needs actual articles; no empty section is published.
+- Deferred: a photo lightbox needs a real gallery; if added, require Escape, focus containment/return, and descriptive captions.
+- Not selected: direct email plus clipboard feedback covers contact. A future form would need an approved service, labeled errors, and server-side secrets.
+- Deferred: custom domain needs a chosen/owned domain. The HTTPS GitHub Pages address is live.
 - [x] Add `content/projects.json` with a small Python static generator. No runtime framework or CMS is needed.
 
 ## Supplied content and current follow-up
@@ -224,7 +229,7 @@ Priority: **P0** = necessary inputs and decisions; **P1** = launch essentials; *
 - Existing Arrakis content remains from the scaffold; the supplied resume adds detail for Ask the Book and AlgoCoach.
 - PDF layout was rendered and inspected. Local HTML structure, anchors, asset paths, responsive image dimensions, PDF text/links, HTTP asset responses, and JavaScript syntax were checked.
 - Browser preview failed: browser access host unavailable; native capture returned a ScreenCaptureKit audio/video capture failure. Actual desktop/mobile visual review, real browser interactions, screen-reader/device checks, and deployed-origin downloads remain open.
-- Automated verification: `npm run check`, `npm test`, and `python3 scripts/check_site.py --http`. Tests use jsdom/axe for behavior and semantics; they do not measure browser layout or Core Web Vitals.
+- Automated verification: `npm run check`, all 11 `npm test` cases, `python3 scripts/check_site.py --http`, and `python3 scripts/check_deployment.py`. GitHub’s Portfolio checks workflow passed. Tests use jsdom/axe for behavior and semantics; they do not measure browser layout or Core Web Vitals.
 - Community research tools required an unconnected account; no community-source claims or invented citations are included. Project READMEs and official MDN scroll-snap documentation informed the implementation.
 
 ## Maintenance and working notes
